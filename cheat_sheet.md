@@ -1,1 +1,1 @@
-[cheatsheet online](www.ss64.com/bash)
+[Cheat Sheet](https://ss64.com/bash/)
