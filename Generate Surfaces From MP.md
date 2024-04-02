@@ -7,7 +7,7 @@ NOTE: You will need to register to get an [API(https://en.wikipedia.org/wiki/API
 
 get started here : [Using the MP](https://docs.materialsproject.org/downloading-data/using-the-api/getting-started)
 
-```
+```Python
 from mp_api.client import MPRester
 import pymatgen
 
