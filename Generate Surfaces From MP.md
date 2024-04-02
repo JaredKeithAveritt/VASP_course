@@ -7,6 +7,16 @@ NOTE: You will need to register to get an [API](https://en.wikipedia.org/wiki/AP
 
 Now you can start with the example below, or learn more about MP here : [Using MP](https://docs.materialsproject.org/downloading-data/using-the-api/getting-started)
 
+to install : 
+```Bash
+module load anaconda/2019.10
+conda create --name <myenv>
+conda activate <myenv>
+python -m ipykernel install --user --name <myenv> --display-name "<Python (myenv)>"  
+conda install pip
+pip install mp-api
+```
+
 ```Python
 from mp_api.client import MPRester
 import pymatgen
