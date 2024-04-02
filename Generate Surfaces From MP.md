@@ -3,7 +3,7 @@
 
 The example below for a graphene surface
 
-NOTE: You will need to register to get an [API(https://en.wikipedia.org/wiki/API) from the [MP API Key] (https://materialsproject.org/api) 
+NOTE: You will need to register to get an [API](https://en.wikipedia.org/wiki/API) from the [MP API Key](https://next-gen.materialsproject.org/api#api-key)
 
 get started here : [Using the MP](https://docs.materialsproject.org/downloading-data/using-the-api/getting-started)
 
