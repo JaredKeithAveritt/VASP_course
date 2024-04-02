@@ -44,7 +44,7 @@ fig, ax = plt.subplots()
 plot_atoms(atoms, ax, radii=0.9,rotation=('90x,90y,0z'))
 print('total number of atoms origionally = ',len(atoms))
 
-# Delete atoms 267 to 270
+# Delete atoms len(atoms) to 4:len(atoms) 
 #atoms_removed = atoms.copy()
 #del atoms_removed[len(atoms)-4:len(atoms)]
 
