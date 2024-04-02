@@ -5,7 +5,7 @@ The example below for a graphene surface
 
 NOTE: You will need to register to get an [API](https://en.wikipedia.org/wiki/API) from the [MP API Key](https://next-gen.materialsproject.org/api#api-key)
 
-get started here : [Using the MP](https://docs.materialsproject.org/downloading-data/using-the-api/getting-started)
+Now you can start with the example below, or learn more about MP here : [Using MP](https://docs.materialsproject.org/downloading-data/using-the-api/getting-started)
 
 ```Python
 from mp_api.client import MPRester
@@ -35,8 +35,6 @@ import numpy as np
 from ase.visualize import view
 import matplotlib.pyplot as plt
 from ase.visualize.plot import plot_atoms
-
-
 
 fig, ax = plt.subplots()
 plot_atoms(atoms, ax, radii=0.9,rotation=('0x,0y,0z'))
