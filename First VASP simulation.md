@@ -13,7 +13,7 @@ VASP is already installed at `/nas/longleaf/home/manojw/VASP/vasp.6.3.2/bin` and
 And do the same for the location of our tutorial files we downloaded
 ```Bash
 export PATH=$PATH:/nas/longleaf/home/manojw/VASP/vasp.6.3.2/bin
-export TUTORIALS="~/first_VASP"
+export TUTORIALS=/nas/longleaf/home/YOURONYEN/first_VASP
 ```
 
 lets test the TUTORIALS variable:
