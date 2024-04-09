@@ -44,7 +44,10 @@ python -m ipykernel install --user --name <myenv> --display-name "<Python (myenv
 Now lets install some packages we will need!
 
 ```Bash
+
 conda install mp-api # or pip install mp-api
-conda install scipy 
+conda install scipy
+pip install phonopy
+pip install ase
 conda install -c conda-forge pyprocar
 ```
