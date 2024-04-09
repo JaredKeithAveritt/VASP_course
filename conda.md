@@ -36,6 +36,8 @@ conda create -n <myenv> python=3.9
 
 ```Bash
 source activate <myenv>
+conda install pip
+conda install ipykernel # or pip install ipykernel
 python -m ipykernel install --user --name <myenv> --display-name "<Python (myenv)>"  
 ```
 (Note. You may need to install ipykernel:  conda install ipykernel)
