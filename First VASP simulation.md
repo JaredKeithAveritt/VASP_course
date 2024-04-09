@@ -9,4 +9,18 @@ curl -O https://www.vasp.at/tutorials/latest/molecules-part1.zip
 unzip molecules-part1.zip
 ```
 
+VASP is already installed at `/nas/longleaf/home/manojw/VASP/vasp.6.3.2/bin` and we need to assign the path variable for the VASP executable. 
+And do the same for the location of our tutorial files we downloaded
+```Bash
+export PATH=$PATH:/nas/longleaf/home/manojw/VASP/vasp.6.3.2/bin
+export TUTORIALS=~/first_VASP/molecules
+```
 
+
+
+
+cd
+ls
+cd vasp_g
+ls
+nano batch.sh
