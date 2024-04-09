@@ -18,6 +18,6 @@ export TUTORIALS="~/first_VASP"
 
 lets test the TUTORIALS variable:
 ```Bash
-cd $TUTORIALS/molecules*
+cd $TUTORIALS/molecules
 ```
 
