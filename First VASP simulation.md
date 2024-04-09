@@ -16,11 +16,3 @@ export PATH=$PATH:/nas/longleaf/home/manojw/VASP/vasp.6.3.2/bin
 export TUTORIALS=~/first_VASP/molecules
 ```
 
-
-
-
-cd
-ls
-cd vasp_g
-ls
-nano batch.sh
