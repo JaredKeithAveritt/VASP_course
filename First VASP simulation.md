@@ -18,6 +18,6 @@ export TUTORIALS=/nas/longleaf/home/YOURONYEN/first_VASP
 
 lets test the TUTORIALS variable:
 ```Bash
-cd $TUTORIALS/molecules
+cd $TUTORIALS/molecules/e01_*
 ```
 
