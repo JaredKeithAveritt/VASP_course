@@ -16,3 +16,8 @@ export PATH=$PATH:/nas/longleaf/home/manojw/VASP/vasp.6.3.2/bin
 export TUTORIALS="~/first_VASP"
 ```
 
+lets test the TUTORIALS variable:
+```Bash
+cd $TUTORIALS/molecules/e01_*
+```
+
