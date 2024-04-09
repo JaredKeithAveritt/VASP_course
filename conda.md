@@ -7,6 +7,11 @@ bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
 rm -rf ~/miniconda3/miniconda.sh
 ```
 
+Check your version 
+```
+conda -V
+```
+
 
 https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
 
