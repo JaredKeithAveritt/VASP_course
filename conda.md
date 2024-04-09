@@ -40,4 +40,11 @@ conda install pip
 conda install ipykernel # or pip install ipykernel
 python -m ipykernel install --user --name <myenv> --display-name "<Python (myenv)>"  
 ```
-(Note. You may need to install ipykernel:  conda install ipykernel)
+
+Now lets install some packages we will need!
+
+```Bash
+conda install mp-api # or pip install mp-api
+conda install scipy 
+conda install -c conda-forge pyprocar
+```
