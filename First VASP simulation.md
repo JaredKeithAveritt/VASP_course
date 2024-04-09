@@ -19,5 +19,6 @@ export TUTORIALS=/nas/longleaf/home/YOURONYEN/first_VASP
 lets test the TUTORIALS variable:
 ```Bash
 cd $TUTORIALS/molecules/e01_*
+ls
 ```
-
+you should see a few files, now we are ready!
