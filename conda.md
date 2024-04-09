@@ -1,4 +1,5 @@
 # Installing and setup path variable for miniconda:
+https://docs.anaconda.com/free/miniconda/
 
 ```Bash
 mkdir -p ~/miniconda3
@@ -28,6 +29,11 @@ If it is >=24 you are good!
 
 
 We will need conda to install packages to use on Jupyter notebook.
+
+```Bash
+conda create -n <myenv> python=3.9 
+```
+
 ```Bash
 source activate <myenv>
 python -m ipykernel install --user --name <myenv> --display-name "<Python (myenv)>"  
