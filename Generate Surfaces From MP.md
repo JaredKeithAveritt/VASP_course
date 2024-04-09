@@ -13,7 +13,7 @@ from mp_api.client import MPRester
 import pymatgen
 
 # Your Materials Project API key
-API_KEY = "<YOUR API KEY"
+API_KEY = "<YOUR API KEY>"
 
 # The ID of the material (graphene is mp-1040425)
 material_id = "mp-1040425"
