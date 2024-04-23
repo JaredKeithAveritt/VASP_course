@@ -9,3 +9,29 @@ in your bashrc file
 cd
 nano .bashrc
 ```
+
+```
+cd
+nano .bash_profile
+```
+
+```
+cd
+cp -r /proj/averittlab/potpaw_PBE . 
+```
+
+follow instructions in how_to_install in the vaspkit folder
+
+change the PBE_PATH variable to `~/potpaw_PBE/`
+
+copy these lines to the bottom of the .bash_profile file:
+
+```
+export VASP_SCRIPT=/nas/longleaf/home/manojw/VASP/vasp.6.3.2/bin/vasp_std
+export VASP_PP_PATH=/nas/longleaf/home/your_onyen_here
+```
+
+close and save
+
+exit and restart terminal
+
