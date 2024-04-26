@@ -1,9 +1,62 @@
 # Graphene in VASP
 
-## Making the geometry file
+## Making the geometry file `POSCAR` using Jupyter notebook and the following code 
 We can make the input geometry using data from the materials database
 ```
+from mp_api.client import MPRester
+import pymatgen
 
+# Your Materials Project API key
+API_KEY = "insert_your_API"
+
+# The ID of the material 
+# Material_id = "mp-626143" # this is ?
+material_id = "mp-1040425" # this is graphene
+
+
+# Create an instance of MPRester
+with MPRester(API_KEY) as mpr:
+    material_data = mpr.materials.summary.search(material_ids=[str(material_id)])
+    structure = mpr.get_structure_by_material_id(str(material_id))
+    
+    structure.make_supercell((5,5,1))
+    from pymatgen.io.ase import AseAtomsAdaptor
+
+# Convert pymatgen structure to ASE Atoms
+adaptor = AseAtomsAdaptor()
+atoms = adaptor.get_atoms(structure)
+from ase import io
+import ase
+import numpy as np
+from ase.visualize import view
+import matplotlib.pyplot as plt
+from ase.visualize.plot import plot_atoms
+
+# access the cell of the atoms object
+cell=atoms.cell
+print("the cell of the atoms object:")
+print(cell)
+
+# create a,b,c values to correspond to the unit cell
+a, b, c = cell.lengths()
+print("cell dimensions (length of vectors):")
+print("a = {}, b = {}, c = {}".format(a,b,c)) 
+
+fig, ax = plt.subplots()
+plot_atoms(atoms, ax, radii=0.9,rotation=('0x,0y,0z'))
+fig, ax = plt.subplots()
+plot_atoms(atoms, ax, radii=0.9,rotation=('0x,90y,90z'))
+fig, ax = plt.subplots()
+plot_atoms(atoms, ax, radii=0.9,rotation=('180x,90y,0z'))
+print('total number of atoms origionally = ',len(atoms))
+
+# Delete atoms 267 to 270
+# atoms_removed = atoms.copy()
+# del atoms_removed[len(atoms)-4:len(atoms)]
+
+
+atoms.write('POSCAR', format='vasp', direct=True)
+len(atoms)
 ```
 
 ## Geometry Optimization (i.e. energy minimisation)
