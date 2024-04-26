@@ -244,7 +244,6 @@ check parameters of `ENCUT` and `PREC` from the `/OPT/INCAR` vs. `/SCF/INCAR` is
 
 Also make sure that `ISMEAR = 1`
 
-
 # Density of States Calculation (DOS) - post dft analysis
 ```
 ~/graphene_tutorial
@@ -386,5 +385,52 @@ plt.yticks(fontsize=18, fontfamily='monospace')
 plt.legend(fontsize=18)
 plt.savefig('G_DOS.png', dpi=300)  # Adjust dpi value as needed for higher or lower resolution
 plt.show()
+```
+
+
+We see BUTT! 
+
+# Re-Run SCF
+
+to fix it we need to go back to the SCF step first and tighten the converging criterian and increase the density of the mesh and change ISMEAR = 0, as advised by the VASP
+
+**SCF/INCAR:**
+```
+IVDW = 12
+ISMEAR = 0
+SIGMA = 0.02
+EDIFF = 1E-6
+```
+
+**SCF/KPOINTS:**
+```
+K-Spacing Value to Generate K-Mesh: 0.030
+0
+Monkhorst-Pack
+   13   13   1
+0.0  0.0  0.0
+```
+
+re-run job, when job is done, we can calculate the DOS again.
+
+# Re-Run DOS
+
+```
+cd ~/graphene_tutorial
+rm -r DOS
+mkdir DOS
+cd DOS
+cp ../SCF/CHGCAR ../SCF/WAVECAR ../SCF/run_job.sh ../SCF/POSCAR ../SCF/POTCAR ../SCF/KPOINTS ../SCF/INCAR .
+```
+
+edit the following lines in the `DOS/INCAR` to:
+```FORTRAN
+ICHARG = 11
+LWAVE  =  .FALSE.
+LCHARGE = .FALSE.
+IVDW = 12
+ISMEAR = 5
+LORBIT = 11
+NEDOS = 3001
 ```
 
