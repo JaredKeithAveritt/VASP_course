@@ -153,7 +153,7 @@ vaspkit
 ```
 
 **KPOINTS:**
-```
+```Bash
 cd  ~/graphene_tutorial
 vaspkit
 102
@@ -182,7 +182,7 @@ mpirun vasp_std
 The output files from the geometry optimization, with the above incar include the files : 
 
 but the one I want to show is here is `OUTCAR` : 
-```
+```Fortran
  LDA part: xc-table for Pade appr. of Perdew
  POSCAR, INCAR and KPOINTS ok, starting setup
  FFT: planning ... GRIDC
@@ -227,8 +227,8 @@ DAV:  24    -0.461146221478E+03    0.20482E-08    0.72205E-09  1144   0.775E-06
 the electron density is energy minimized 
 
 The `CONTCAR` contains the ionic relaxed positions from the last optimization step
-```
 
+```Bash
 cd ~/graphene_tutorial
 mkdir SCF
 cd SCF
@@ -246,7 +246,7 @@ check parameters of `ENCUT` and `PREC` from the `/OPT/INCAR` vs. `/SCF/INCAR` is
 Also make sure that `ISMEAR = 1`
 
 # Density of States Calculation (DOS) - post dft analysis
-```
+```Bash
 ~/graphene_tutorial
 mkdir DOS
 cd DOS
@@ -260,17 +260,48 @@ STD3
 The `INCAR` file needs to be changes a little
 
 uncomment the lines
-```
+```Fortran
 ENCUT = 520
 ICHARGE = 11
 ```
 
 and change 
-```
+```Fortran
 ISMEAR = 5 
 ```
-, so it looks like : 
+so it looks like: 
+```Fortran
+Global Parameters
+ISTART =  1            (Read existing wavefunction, if there)
+ISPIN  =  1            (Non-Spin polarised DFT)
+# ICHARG =  11         (Non-self-consistent: GGA/LDA band structures)
+LREAL  = .FALSE.       (Projection operators: automatic)
+ENCUT  =  520        (Cut-off energy for plane wave basis set, in eV)
+# PREC   =  Accurate   (Precision level: Normal or Accurate, set Accurate when perform struct$
+LWAVE  = .TRUE.        (Write WAVECAR or not)
+LCHARG = .TRUE.        (Write CHGCAR or not)
+ADDGRID= .TRUE.        (Increase grid, helps GGA convergence)
+# LVTOT  = .TRUE.      (Write total electrostatic potential into LOCPOT or not)
+# LVHAR  = .TRUE.      (Write ionic + Hartree electrostatic potential into LOCPOT or not)
+# NELECT =             (No. of electrons: charged cells, be careful)
+# LPLANE = .TRUE.      (Real space distribution, supercells)
+# NWRITE = 2           (Medium-level output)
+# KPAR   = 2           (Divides k-grid into separate groups)
+# NGXF    = 300        (FFT grid mesh density for nice charge/potential plots)
+# NGYF    = 300        (FFT grid mesh density for nice charge/potential plots)
+# NGZF    = 300        (FFT grid mesh density for nice charge/potential plots)
 
+Static Calculation
+ISMEAR =  0           (gaussian smearing method)
+SIGMA  =  0.02         (please check the width of the smearing)
+LORBIT =  11           (PAW radii for projected DOS)
+NEDOS  =  2001         (DOSCAR points)
+NELM   =  60           (Max electronic SCF steps)
+EDIFF  =  1E-06        (SCF energy convergence, in eV)
+
+DFT-D3 Correction
+IVDW   =  12           (DFT-D3 method of method with no damping)
+```
 
 # Lets plot the DOS! 
 
@@ -350,9 +381,7 @@ def read_doscar(file_path):
 def smooth_data(data, sigma=2):
     return gaussian_filter1d(data, sigma)
 
-
-
-doscar_path_G ='/nas/longleaf/home/jarkeith/dissertation/Graphene/redo_Graphene/G133/DOSCAR'
+doscar_path_G ='/nas/longleaf/home/YOUR_ONYEN/graphene_tutorial/DOS/DOSCAR'
 
 energy_values_G, total_dos_G , int_dos_G= read_doscar(doscar_path_G)
 
@@ -390,6 +419,9 @@ plt.show()
 
 
 We see BUTT! 
+
+![BAD DOS](https://github.com/JaredKeithAveritt/VASP_course/edit/main/Graphene_Tutorial.md)
+
 
 # Re-Run SCF
 
