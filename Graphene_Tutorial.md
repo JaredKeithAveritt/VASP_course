@@ -131,7 +131,7 @@ cp POSCAR POSCAR_ORIGINAL
 cp POSCAR_REV POSCAR
 ```
 
-## Geometry Optimization (i.e. energy minimisation)
+## Geometry Optimization (i.e. energy minimisation) , - ionic relaxation
 
 We can use vaspkit to make the input files:
 note: make sure the `POSCAR` file is in the active directory
@@ -222,4 +222,169 @@ DAV:  24    -0.461146221478E+03    0.20482E-08    0.72205E-09  1144   0.775E-06
  reached required accuracy - stopping structural energy minimisation
 ```
 
-anot
+# Self Consistent Field (SCF) Calculation (electronic-opt)
+the electron density is energy minimized 
+
+The `CONTCAR` contains the ionic relaxed positions from the last optimization step
+```
+
+cd ~/graphene_tutorial
+mkdir SCF
+cd SCF
+
+cp ../OPT/CONTCAR POSCAR
+cp ../OPT/run_job.sh ../OPT/POTCAR ../OPT/KPOINTS .
+
+vaspkit
+101
+STD3
+```
+
+check parameters of `ENCUT` and `PREC` from the `/OPT/INCAR` vs. `/SCF/INCAR` is the same.
+
+Also make sure that `ISMEAR = 1`
+
+
+# Density of States Calculation (DOS) - post dft analysis
+```
+~/graphene_tutorial
+mkdir DOS
+cd DOS
+cp ../SCF/CHGCAR ../SCF/WAVECAR ../SCF/run_job.sh ../SCF/POSCAR ../SCF/POTCAR ../SCF/KPOINTS .
+
+vaspkit
+101
+STD3
+```
+
+The `INCAR` file needs to be changes a little
+
+uncomment the lines
+```
+ENCUT = 520
+ICHARGE = 11
+```
+
+and change 
+```
+ISMEAR = 5 
+```
+, so it looks like : 
+
+
+# Lets plot the DOS! 
+
+using jupyter:
+
+```Python
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+from scipy.ndimage import gaussian_filter1d
+
+
+# Read data from the file
+def read_pdos(file_path):
+    data = np.loadtxt(file_path, skiprows=1)  # Assuming the first row contains strings
+
+    # Extract labels from the comment line
+    with open(file_path, 'r') as file:
+        comment_line = file.readline().strip()
+
+    # Remove leading '#' and split the line into labels
+    labels = comment_line[1:].split()[1:]
+
+    # Extract data columns
+    energy_values = data[:, 0]  # First column as x-axis values
+    pdos_values = data[:, 1:]  # Data excluding the first column
+
+    return energy_values, pdos_values, labels
+
+
+def read_doscar(file_path):
+    total_dos=[]
+    with open(file_path, 'r') as file:
+        # Skip the first four header lines
+        for _ in range(5):
+            next(file)
+        
+        # Read the 5th line to get the desired value
+        fifth_line = next(file).split()
+        E_fermi_value = float(fifth_line[3])  # Extracting the fourth item
+        NEDOS_value=int(fifth_line[2])
+        # Initialize lists for energy values and total DOS
+        energy_values = []
+        total_dos = []
+        int_dos = []
+        
+        # Initialize line counter
+        line_count = 0
+
+        # Read total DOS data from the remaining lines
+        for line in file:
+            # Increment line counter
+            line_count += 1
+
+            # Check if line count exceeds NEDOS_value
+            if line_count > NEDOS_value:
+                break
+
+            data = line.split()
+            # Ensure the line has enough elements to avoid index errors
+            if len(data) >= 2:
+                energy_values.append(float(data[0]))
+                total_dos.append(float(data[1]))
+                int_dos.append(float(data[2]))
+
+    # Convert lists to numpy arrays for further processing
+    energy_values_np = np.array(energy_values)
+    total_dos_np = np.array(total_dos)
+    int_dos_np= np.array(int_dos)
+
+    energy_values_np -= E_fermi_value
+
+    return energy_values_np, total_dos_np, int_dos_np
+
+
+# Function to smooth data using Gaussian filter
+def smooth_data(data, sigma=2):
+    return gaussian_filter1d(data, sigma)
+
+
+
+doscar_path_G ='/nas/longleaf/home/jarkeith/dissertation/Graphene/redo_Graphene/G133/DOSCAR'
+
+energy_values_G, total_dos_G , int_dos_G= read_doscar(doscar_path_G)
+
+
+sigma = 0# Adjust the sigma value as needed
+i=9
+# Smooth total DOS data using Gaussian filter
+if sigma !=0:
+    total_dos_G = smooth_data(total_dos_G, sigma)
+
+# Plot the data
+plt.figure(figsize=(12, 6))
+
+plt.plot(energy_values_G, total_dos_G, label='Total', color='blue')
+plt.plot(energy_values_G, int_dos_G/7, label='Integrated', color='green')
+
+# Setting font size and style for axis labels
+plt.xlabel('Energy (eV)', fontsize=12, fontfamily='sans-serif', fontstyle='normal')
+plt.ylabel('Density of States', fontsize=12, fontfamily='sans-serif', fontstyle='normal')
+
+# Setting font size for tick labels
+
+#plt.axhline(0, color='black', linestyle='--', linewidth=0.8)  # Horizontal line at y=0
+#plt.xlim(-4,4)
+#plt.ylim(0,1)
+plt.legend()
+plt.gca().set_yticklabels([])
+#plt.grid(True)
+plt.xticks(fontsize=18, fontfamily='monospace')
+plt.yticks(fontsize=18, fontfamily='monospace')
+plt.legend(fontsize=18)
+plt.savefig('G_DOS.png', dpi=300)  # Adjust dpi value as needed for higher or lower resolution
+plt.show()
+```
+
