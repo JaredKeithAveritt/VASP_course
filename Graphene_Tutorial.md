@@ -420,7 +420,7 @@ plt.show()
 
 We see BUTT! 
 
-![BAD DOS](https://github.com/JaredKeithAveritt/VASP_course/edit/main/Graphene_Tutorial.md)
+![BAD DOS](https://github.com/JaredKeithAveritt/VASP_course/blob/main/BAD-G_DOS.png)
 
 
 # Re-Run SCF
