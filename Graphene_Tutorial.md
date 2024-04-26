@@ -2,7 +2,8 @@
 
 ## Making the geometry file `POSCAR` using Jupyter notebook and the following code 
 We can make the input geometry using data from the materials database
-```
+
+```Python
 from mp_api.client import MPRester
 import pymatgen
 
@@ -61,7 +62,7 @@ len(atoms)
 
 The contents of the poscar file:
 
-```
+```Fortran
  C 
  1.0000000000000000
      6.1700750000000006  -10.6868850000000002    0.0000000000000000
@@ -124,7 +125,7 @@ Direct
 
 We want to center all of the atoms to the middle of the box in the z-coordinate:
 
-```
+```Bash
 vaspkit
 921
 cp POSCAR POSCAR_ORIGINAL
@@ -137,7 +138,7 @@ We can use vaspkit to make the input files:
 note: make sure the `POSCAR` file is in the active directory
 
 **INCAR:**
-```
+```Bash
 cd  ~/graphene_tutorial
 vaspkit
 101
@@ -145,7 +146,7 @@ SRD3
 ```
 
 **POTCAR:**
-```
+```Bash
 cd  ~/graphene_tutorial
 vaspkit
 103
