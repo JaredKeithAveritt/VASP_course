@@ -6,7 +6,7 @@ We can make the input geometry using data from the materials database
 
 ```
 
-## Geometry Optimization
+## Geometry Optimization (i.e. energy minimisation)
 
 We can use vaspkit to make the input files:
 note: make sure the `POSCAR` file is in the active directory
