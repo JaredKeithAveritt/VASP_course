@@ -462,8 +462,28 @@ ICHARG = 11
 LWAVE  =  .FALSE.
 LCHARGE = .FALSE.
 IVDW = 12
-ISMEAR = 5
+ISMEAR = -5
 LORBIT = 11
 NEDOS = 3001
 ```
+
+Other Considerations: 
+K-Points Density:
+A k-points grid of 33x33x1 is quite high and should generally give a well-converged DOS. However, in certain cases, such as band structures involving Dirac points, a different density or grid might yield better results.
+Try slightly reducing the k-point density to a value like 21x21x1 or 27x27x1 to check if the high noise levels are a result of an excessively dense grid.
+Smearing Method:
+You have ISMEAR = -5, which is suitable for accurate DOS calculations. Ensure that the chosen SIGMA value (0.02 eV) is appropriate for the system by experimenting with other values like 0.05 or 0.1.
+If you are not observing clear features even after adjusting SIGMA, consider switching to ISMEAR = 0 (Gaussian) for metallic systems or testing other methods.
+Projected DOS:
+The parameter LORBIT = 11 is necessary for projected DOS but could potentially add extra noise depending on orbital contributions. You can try LORBIT = 10 to reduce noise while still generating reasonable projections.
+NEDOS Points:
+Having NEDOS = 3001 should generally provide sufficient resolution. Try varying the value between 1000 and 4000 to see how this affects the appearance of the DOS plot.
+Non-Self-Consistent Calculation (ICHARG = 11):
+Using ICHARG = 11 for DOS calculation is appropriate, but ensure that the input charge density file (CHGCAR) is from a fully converged SCF calculation.
+Check Wavefunction Consistency:
+If you are using an old wavefunction (WAVECAR) from another calculation, consider regenerating the wavefunction using an SCF calculation before performing the DOS.
+Check Data Processing:
+Ensure your data extraction and plotting process is consistent and not introducing artificial noise. If you're using a custom script, try validating the output with another plotting tool.
+Other Functional or Correction Parameters:
+The DFT-D3 correction (IVDW = 12) can affect the DOS shape subtly. Verify that this method is appropriate for your system, or consider testing the calculation without dispersion correction to see if it improves the DOS plot.
 
